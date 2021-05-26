@@ -1,0 +1,40 @@
+<html>
+<header>
+  <title>Main</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/functions.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+</header>
+<body>
+  <form class="upload" action="/" enctype="multipart/form-data" method="POST">
+    <input type="file" name="files" multiple id="files">
+    <button type="submit">Enviar</button>
+  </form>
+
+  <table align="left | right | right">
+    <tr>
+      <th>Tipo</th>
+      <th>Name</th>
+      <th>Tamanho do arquivo</th>
+    </tr>
+
+    {% for file in files %}
+      <tr>
+        <td>{{ file["type"] }}</td>
+        <td>{{ file["name"] }}
+          <div class="dropdown">
+            <button id="interact-button" onclick="myFunction()" class="dropbtn">...</button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="">Baixar</a>
+              <a href="">Excluir</a>
+            </div>
+          </div>
+        </td>
+        <td>{{ file["size"] }} {{file["size_type"]}}</td>
+      </tr>
+    {% endfor %}
+
+  </table>
+
+</body>
+</html>

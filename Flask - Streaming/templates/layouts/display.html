@@ -1,0 +1,101 @@
+<html>
+<header>
+  <meta charset="UTF-8"/>
+  {% if catalog[id]['title'] %}
+    <title>{{ catalog[id]['title'] }}</title>
+  {% else %}
+    <title>Catalog</title>
+  {% endif %}
+  
+  <script type="text/javascript" src="{{ url_for('static', filename='js/functions.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+</header>
+<body>
+  <div id='player'>
+    <div class="back">
+      <p id="msg-catalog">Voltar ao catálogo</p>
+      <img src="./static/effects/cross.png" onclick="delete_video_frame()">
+    </div>
+      <video id="video-content" controls="" autoplay="" name="media" onended="delete_video_frame()">
+        <source id="source"src="">
+        <track id="track-sub" kind="subtitles" label="Português" src="" srclang="pt-br" default></track>
+      </video>
+  </div>
+  
+  <script>
+    function search_mouse(type){
+      var doc_search = document.getElementById("search");
+      doc_search.style.color = "rgba(255, 255, 255, 1)";
+      
+      if(type == "in"){
+        doc_search.placeholder = "Pesquisar..";
+      }else if (type == "out") {
+        doc_search.placeholder = "";
+        doc_search.style.color = "rgba(0, 0, 0, 0)";
+      }
+    }
+    
+    function search(){
+      var sh = document.getElementById("search").value;
+      
+      var max = {{ catalog|length }};
+      
+      if (sh != "" && sh.length > 0){
+        {% for i in catalog %}
+          var title = "{{ catalog[i]['title'] }}";
+          
+          title_upper = title.toUpperCase(); 
+          title_upper = title_upper.replace(/\s+/g, '');
+          
+          sh_upper = sh.toUpperCase();
+          sh_upper = sh_upper.replace(/\s+/g, '');
+          
+          if (title_upper.includes(sh_upper.toUpperCase())){
+            document.getElementById(title).style.display = "block";
+          }else{
+            document.getElementById(title).style.display = "none";
+          }
+        {% endfor %}
+      }else{
+        
+        {% for i in catalog %}
+          var title = "{{ catalog[i]['title'] }}";
+          document.getElementById(title).style.display = "block";
+        {% endfor %}
+      }
+    }
+    
+  </script>
+  
+  <div class='banner'>
+    <img src=" {{ catalog[id]['layout']['banner'] }} "></img>
+    <h2> {{ catalog[id]['title'] }} <h2>
+  </div>
+  <div id="layout" class='layout'>
+    
+    <div class='vertical-bar' onmouseover="search_mouse('in')" onmouseout="search_mouse('out')">
+      <input id="search" onkeyup="search()" type="text" placeholder="" name="search">
+      <img id="search-icon" src="/static/effects/search.png"/ draggable="false">
+      </input>
+      <ul>
+        {% for i in catalog %}
+          <li>
+            <div id="{{ catalog[i]['title'] }}" class='catalog-icon-background'>
+              <a href="{{ catalog[i]['url'] }}">
+                <img src="{{ catalog[i]['layout']['icon'] }} "></img>
+                <div id='catalog-icon-name'>{{ catalog[i]['title'] }}</div>
+              </a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+    <div id="episodes" class='episodes'>
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </div>
+  
+</body>
+</html>

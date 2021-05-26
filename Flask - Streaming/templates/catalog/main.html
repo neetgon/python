@@ -1,0 +1,52 @@
+{% extends "layouts/display.html" %}
+
+{% block content %}
+  {% set temp = catalog[id]['episodes']['season'] %}
+
+  {% if (temp|length) > 1 %}
+    <select id='temp-select' name='temp-select' onchange="change_temp()">
+      {% for season in catalog[id]['episodes']['season'] %}
+        <option value="{{ season }}">{{ season }} ° Temporada </option>
+      {% endfor %}
+    </select>
+  {% endif %}
+
+
+  <script>
+    function change_temp(){
+      var max = {{ temp|length }};
+      var value = document.getElementById('temp-select').value;
+
+      for (var i = 1; i < max + 1; i++) {
+        document.getElementById("hide_" + i).style.display = 'none';
+      }
+
+      document.getElementById("hide_" + value).style.display = "block";
+    }
+  </script>
+
+    {% for season in catalog[id]['episodes']['season'] %}
+        <div id="hide_{{ season }}">
+          <div class="temp">
+            {% for episode in catalog[id]['episodes']['season'][season] %}
+              <div id='test' onclick="insert_video_in_frame( '{{ catalog[id]['episodes']['season'][season][episode]['ep'] }}',  '{{ catalog[id]['episodes']['season'][season][episode]['sub'] }}')">
+                <img id="thumb" src="{{ catalog[id]['episodes']['season'][season][episode]['thumb'] }}"/>
+                <img id='player-icon' src="static/player/icon.png"/>
+                <div id='episode-num'>
+                  {% if episode == "dublado" %}
+                    <h3>Dublado<h3>
+                  {% elif episode == "legendado" %}
+                    <h3>Legendado<h3>
+                  {% else %}
+                    <h3>{{ episode }}<h3>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+    {% endfor %}
+
+    <script>change_temp()</script>
+
+{% endblock content %}

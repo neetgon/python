@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Chromauto</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+  </head>
+  <body background="interface/background.png">
+    <button type="button" title="open" onclick="open_file()">Abrir Imagem</button></br></br>
+    <label id="tol-show" for="tolerancia">Tolêrancia 20</label></br>
+    <input type="range" id="tolerancia" value="20" name="tolerancia" min="0" max="100" onchange="convert()"></br></br>
+    <button type="button" title="convert" onclick="convert()">Converter</button>
+    <button type="button" title="salvar" onclick="salvar()">Salvar</button>
+    </br></br>
+    <img id="display" src="interface/default.jpg" width="90%" height="60%"/>
+  </body>
+</html>

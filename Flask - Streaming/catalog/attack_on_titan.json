@@ -1,0 +1,22 @@
+{
+  "attack-on-titan": {
+    "url": "/attack-on-titan",
+    "title": "Attack On Titan",
+    "id": "attack_on_titan",
+
+    "layout":
+    {
+      "banner": "https://i.imgur.com/Bc0942w.jpeg",
+      "icon": "https://i.imgur.com/oOySDPn.png"
+    },
+
+    "episodes":
+    {
+      "season":{
+        "only_one":{
+          "64": {"ep": "static/catalog/attack_on_titan/episodios/64/content.mp4", "thumb": "https://nerdhits.com.br/wp-content/uploads/2021/01/eren-yeager-2.jpg"}
+        }
+      }
+    }
+  }
+}
